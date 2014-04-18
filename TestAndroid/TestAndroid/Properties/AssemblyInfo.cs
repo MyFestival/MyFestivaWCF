@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MyFestivalWCFHost")]
+[assembly: AssemblyTitle("TestAndroid")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MyFestivalWCFHost")]
+[assembly: AssemblyProduct("TestAndroid")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("82610c21-0269-4128-8020-5c096616c778")]
+[assembly: Guid("3efa4a84-4d51-4296-897e-aa409a023f83")]
 
 // Version information for an assembly consists of the following four values:
 //

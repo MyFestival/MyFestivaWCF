@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="myfestal_db" Class="azureDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=tcp:bx8osqsrzy.database.windows.net;Initial Catalog=myfestal_db;User ID=myFestivalAdmin@bx8osqsrzy" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="myfestal_dbConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Counties" Member="Counties">
+    <Type Name="County">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="County_Festival" Member="Festivals" ThisKey="ID" OtherKey="FestivalCounty_ID" Type="Festival" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Events" Member="Events">
+    <Type Name="Event">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FestivalID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EventsName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="EventsDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="StartTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EndTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Location" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="EType_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EventLogo" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="EventType_Event" Member="EventType" ThisKey="EType_ID" OtherKey="ID" Type="EventType" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Festival_Event" Member="Festival" ThisKey="FestivalID" OtherKey="FestivalId" Type="Festival" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EventTypes" Member="EventTypes">
+    <Type Name="EventType">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="EType" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="EventType_Event" Member="Events" ThisKey="ID" OtherKey="EType_ID" Type="Event" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FestivalTypes" Member="FestivalTypes">
+    <Type Name="FestivalType">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FType" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="FestivalType_Festival" Member="Festivals" ThisKey="ID" OtherKey="FType_ID" Type="Festival" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Towns" Member="Towns">
+    <Type Name="Town">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Town_Festival" Member="Festivals" ThisKey="ID" OtherKey="FestivalTown_ID" Type="Festival" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Festivals" Member="Festivals">
+    <Type Name="Festival">
+      <Column Name="FestivalId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FestivalName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FestivalCounty_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FestivalTown_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FType_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FestivalLogo" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Festival_Event" Member="Events" ThisKey="FestivalId" OtherKey="FestivalID" Type="Event" />
+      <Association Name="County_Festival" Member="County" ThisKey="FestivalCounty_ID" OtherKey="ID" Type="County" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="FestivalType_Festival" Member="FestivalType" ThisKey="FType_ID" OtherKey="ID" Type="FestivalType" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Town_Festival" Member="Town" ThisKey="FestivalTown_ID" OtherKey="ID" Type="Town" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+</Database>
