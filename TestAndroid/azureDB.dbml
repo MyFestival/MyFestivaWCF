@@ -5,6 +5,7 @@
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Association Name="County_Festival" Member="Festivals" ThisKey="ID" OtherKey="FestivalCounty_ID" Type="Festival" />
+      <Association Name="County_Town" Member="Towns" ThisKey="ID" OtherKey="CountyID" Type="Town" />
     </Type>
   </Table>
   <Table Name="dbo.Events" Member="Events">
@@ -36,13 +37,6 @@
       <Association Name="FestivalType_Festival" Member="Festivals" ThisKey="ID" OtherKey="FType_ID" Type="Festival" />
     </Type>
   </Table>
-  <Table Name="dbo.Towns" Member="Towns">
-    <Type Name="Town">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Association Name="Town_Festival" Member="Festivals" ThisKey="ID" OtherKey="FestivalTown_ID" Type="Festival" />
-    </Type>
-  </Table>
   <Table Name="dbo.Festivals" Member="Festivals">
     <Type Name="Festival">
       <Column Name="FestivalId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -59,6 +53,15 @@
       <Association Name="County_Festival" Member="County" ThisKey="FestivalCounty_ID" OtherKey="ID" Type="County" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
       <Association Name="FestivalType_Festival" Member="FestivalType" ThisKey="FType_ID" OtherKey="ID" Type="FestivalType" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
       <Association Name="Town_Festival" Member="Town" ThisKey="FestivalTown_ID" OtherKey="ID" Type="Town" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Towns" Member="Towns">
+    <Type Name="Town">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CountyID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Town_Festival" Member="Festivals" ThisKey="ID" OtherKey="FestivalTown_ID" Type="Festival" />
+      <Association Name="County_Town" Member="County" ThisKey="CountyID" OtherKey="ID" Type="County" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

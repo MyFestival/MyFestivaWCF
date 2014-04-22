@@ -37,6 +37,12 @@ namespace TestAndroid
         [OperationContract]
         Festivalwrapper GetEventTypeData();
 
+        [OperationContract]
+        Festivalwrapper GetFesDataByType(int id);
+
+        [OperationContract]
+        Festivalwrapper GetTownDataByCounty(int? id);
+
     }
 
     #region Test WCF
@@ -142,6 +148,8 @@ namespace TestAndroid
         public int ID { get; set; }
         [DataMember]
         public string Name { get; set; }
+        [DataMember]
+        public int CountyId { get; set; }
     }
 
     #endregion

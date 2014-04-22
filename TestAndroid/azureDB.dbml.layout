@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="azureDB">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.75, 8.5" name="azureDB">
   <DataContextMoniker Name="/azureDBDataContext" />
   <nestedChildShapes>
     <classShape Id="ca53e8a4-5966-424c-9859-bb372d249b04" absoluteBounds="1, 0.5, 2, 1.1939925130208333">
@@ -33,19 +33,13 @@
         <elementListCompartment Id="23a56237-1168-4560-bab3-e5e3b7b7f7f9" absoluteBounds="6.265, 1.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="6afb0a99-1af3-45ee-ad72-7c36a6b052c8" absoluteBounds="8.375, 0.5, 2, 1.1939925130208333">
-      <DataClassMoniker Name="/azureDBDataContext/Town" />
-      <nestedChildShapes>
-        <elementListCompartment Id="627e3cdc-d5b9-483e-b3cf-6f3fa406834f" absoluteBounds="8.39, 0.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="1284bb74-f085-4ae6-bd30-8694213f0c90" absoluteBounds="4.25, 3.5, 2, 2.7324039713541666">
       <DataClassMoniker Name="/azureDBDataContext/Festival" />
       <nestedChildShapes>
         <elementListCompartment Id="56f2bef1-9af8-4187-86cf-9374aefd34f3" absoluteBounds="4.265, 3.96, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(4.25 : 3.95755126953125); (2.92708333333333 : 3.95755126953125 : JumpStart); (2.76041666666667 : 3.95755126953125 : JumpEnd); (2.625 : 3.95755126953125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(4.25 : 3.95755126953125); (2.92708333333333 : 3.95755126953125 : JumpStart); (2.76041666666667 : 3.95755126953125 : JumpEnd); (2.625 : 3.95755126953125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/azureDBDataContext/Festival/Festival_Event" />
       <nodes>
         <classShapeMoniker Id="1284bb74-f085-4ae6-bd30-8694213f0c90" />
@@ -59,18 +53,31 @@
         <classShapeMoniker Id="1284bb74-f085-4ae6-bd30-8694213f0c90" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(7.59375 : 1.94399251302083); (7.59375 : 4.74745793489583); (6.25 : 4.74745793489583)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(7.59375 : 1.94399251302083); (7.59375 : 4.74745793489583); (6.25 : 4.74745793489583)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/azureDBDataContext/FestivalType/FestivalType_Festival" />
       <nodes>
         <classShapeMoniker Id="7a2d97c3-c734-411b-8005-581b6a69b32e" />
         <classShapeMoniker Id="1284bb74-f085-4ae6-bd30-8694213f0c90" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(9.375 : 1.69399251302083); (9.375 : 5.67592835677083); (6.25 : 5.67592835677083)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <classShape Id="1470c090-993e-4481-a4a4-b0be2d5b1329" absoluteBounds="9.5, 0.875, 2, 1.3862939453125">
+      <DataClassMoniker Name="/azureDBDataContext/Town" />
+      <nestedChildShapes>
+        <elementListCompartment Id="de605fc4-7a1c-4f49-8130-9cefeeeb4336" absoluteBounds="9.515, 1.335, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(10.5 : 2.2612939453125); (10.5 : 5.521183453125); (6.25 : 5.521183453125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/azureDBDataContext/Town/Town_Festival" />
       <nodes>
-        <classShapeMoniker Id="6afb0a99-1af3-45ee-ad72-7c36a6b052c8" />
+        <classShapeMoniker Id="1470c090-993e-4481-a4a4-b0be2d5b1329" />
         <classShapeMoniker Id="1284bb74-f085-4ae6-bd30-8694213f0c90" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(3 : 0.59375); (10.5 : 0.59375); (10.5 : 0.875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/azureDBDataContext/County/County_Town" />
+      <nodes>
+        <classShapeMoniker Id="ca53e8a4-5966-424c-9859-bb372d249b04" />
+        <classShapeMoniker Id="1470c090-993e-4481-a4a4-b0be2d5b1329" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

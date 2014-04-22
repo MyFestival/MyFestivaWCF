@@ -12,6 +12,7 @@ namespace TestAndroid
 {
     public class DataTransferProc : IDataTransferProc
     {
+        #region TestWCF
         public string GetData(int value)
         {
             return string.Format("You entered: {0}", value);
@@ -29,7 +30,9 @@ namespace TestAndroid
             }
             return composite;
         }
+        #endregion
 
+        #region GetFestivalData
         public Festivalwrapper GetFestivalData()
         {
             Festivalwrapper returnType = new Festivalwrapper();
@@ -50,7 +53,33 @@ namespace TestAndroid
             }
             return returnType;
         }
+        #endregion
 
+        #region GetFestivalData
+        public Festivalwrapper GetFesDataByType(int id)
+        {
+            Festivalwrapper returnType = new Festivalwrapper();
+            using (azureDBDataContext c = new azureDBDataContext())
+            {
+                //returnType.FestivalList = (from fest in c.Festivals
+                  //                         select new FestivalVM()).ToList();
+
+                returnType.FestivalList = (from f in c.Festivals
+                                           where f.FType_ID.Equals(id)
+                                           select new FestivalVM()
+                                           {
+                                               FestivalId = f.FestivalId,
+                                               FestivalName = f.FestivalName,
+                                               StartDate = f.StartDate,
+                                               EndDate = f.EndDate,
+                                               Description = f.Description,
+                                           }).ToList();
+            }
+            return returnType;
+        }
+        #endregion
+
+        #region GetEventData
         public Festivalwrapper GetEventData()
         {
             Festivalwrapper returnType = new Festivalwrapper();
@@ -67,13 +96,16 @@ namespace TestAndroid
                                 EventsName = e.EventsName,
                                 EventsDate = e.EventsDate,
                                 StartTime = e.StartTime,
-                                EndTime = e.EndTime
+                                EndTime = e.EndTime,
+                                Location = e.Location,
                             }).ToList();
 
             }
             return returnType;
         }
+        #endregion
 
+        #region GetCountiesData
         public Festivalwrapper GetCountiesData()
         {
             Festivalwrapper returnType = new Festivalwrapper();
@@ -88,7 +120,9 @@ namespace TestAndroid
             }
             return returnType;
         }
+        #endregion
 
+        #region GetTownData
         public Festivalwrapper GetTownData()
         {
             Festivalwrapper returnType = new Festivalwrapper();
@@ -98,12 +132,32 @@ namespace TestAndroid
                                        select new TownVM()
                                        {
                                            ID = town.ID,
-                                           Name = town.Name
+                                           Name = town.Name,
                                        }).ToList();
             }
             return returnType;
         }
+        #endregion
 
+        #region GetTownDataByCounty
+        public Festivalwrapper GetTownDataByCounty(int? id)
+        {
+            Festivalwrapper returnType = new Festivalwrapper();
+            using (azureDBDataContext c = new azureDBDataContext())
+            {
+                returnType.TownList = (from town in c.Towns
+                                       where town.CountyID.Equals(id)
+                                       select new TownVM()
+                                       {
+                                           ID = town.ID,
+                                           Name = town.Name,
+                                       }).ToList();
+            }
+            return returnType;
+        }
+        #endregion
+
+        #region GetFestTypeData
         public Festivalwrapper GetFestTypeData()
         {
             Festivalwrapper returnType = new Festivalwrapper();
@@ -118,7 +172,9 @@ namespace TestAndroid
             }
             return returnType;
         }
+        #endregion
 
+        #region GetEventTypeData
         public Festivalwrapper GetEventTypeData()
         {
             Festivalwrapper returnType = new Festivalwrapper();
@@ -133,5 +189,8 @@ namespace TestAndroid
             }
             return returnType;
         }
+        #endregion
+
+
     }
 }

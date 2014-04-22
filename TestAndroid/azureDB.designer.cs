@@ -42,12 +42,12 @@ namespace TestAndroid
     partial void InsertFestivalType(FestivalType instance);
     partial void UpdateFestivalType(FestivalType instance);
     partial void DeleteFestivalType(FestivalType instance);
-    partial void InsertTown(Town instance);
-    partial void UpdateTown(Town instance);
-    partial void DeleteTown(Town instance);
     partial void InsertFestival(Festival instance);
     partial void UpdateFestival(Festival instance);
     partial void DeleteFestival(Festival instance);
+    partial void InsertTown(Town instance);
+    partial void UpdateTown(Town instance);
+    partial void DeleteTown(Town instance);
     #endregion
 		
 		public azureDBDataContext() : 
@@ -112,19 +112,19 @@ namespace TestAndroid
 			}
 		}
 		
-		public System.Data.Linq.Table<Town> Towns
-		{
-			get
-			{
-				return this.GetTable<Town>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Festival> Festivals
 		{
 			get
 			{
 				return this.GetTable<Festival>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Town> Towns
+		{
+			get
+			{
+				return this.GetTable<Town>();
 			}
 		}
 	}
@@ -141,6 +141,8 @@ namespace TestAndroid
 		
 		private EntitySet<Festival> _Festivals;
 		
+		private EntitySet<Town> _Towns;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -154,6 +156,7 @@ namespace TestAndroid
 		public County()
 		{
 			this._Festivals = new EntitySet<Festival>(new Action<Festival>(this.attach_Festivals), new Action<Festival>(this.detach_Festivals));
+			this._Towns = new EntitySet<Town>(new Action<Town>(this.attach_Towns), new Action<Town>(this.detach_Towns));
 			OnCreated();
 		}
 		
@@ -210,6 +213,19 @@ namespace TestAndroid
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="County_Town", Storage="_Towns", ThisKey="ID", OtherKey="CountyID")]
+		public EntitySet<Town> Towns
+		{
+			get
+			{
+				return this._Towns;
+			}
+			set
+			{
+				this._Towns.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -237,6 +253,18 @@ namespace TestAndroid
 		}
 		
 		private void detach_Festivals(Festival entity)
+		{
+			this.SendPropertyChanging();
+			entity.County = null;
+		}
+		
+		private void attach_Towns(Town entity)
+		{
+			this.SendPropertyChanging();
+			entity.County = this;
+		}
+		
+		private void detach_Towns(Town entity)
 		{
 			this.SendPropertyChanging();
 			entity.County = null;
@@ -807,120 +835,6 @@ namespace TestAndroid
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Towns")]
-	public partial class Town : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private string _Name;
-		
-		private EntitySet<Festival> _Festivals;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    #endregion
-		
-		public Town()
-		{
-			this._Festivals = new EntitySet<Festival>(new Action<Festival>(this.attach_Festivals), new Action<Festival>(this.detach_Festivals));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(MAX)")]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Town_Festival", Storage="_Festivals", ThisKey="ID", OtherKey="FestivalTown_ID")]
-		public EntitySet<Festival> Festivals
-		{
-			get
-			{
-				return this._Festivals;
-			}
-			set
-			{
-				this._Festivals.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Festivals(Festival entity)
-		{
-			this.SendPropertyChanging();
-			entity.Town = this;
-		}
-		
-		private void detach_Festivals(Festival entity)
-		{
-			this.SendPropertyChanging();
-			entity.Town = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Festivals")]
 	public partial class Festival : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1347,6 +1261,185 @@ namespace TestAndroid
 		{
 			this.SendPropertyChanging();
 			entity.Festival = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Towns")]
+	public partial class Town : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private string _Name;
+		
+		private System.Nullable<int> _CountyID;
+		
+		private EntitySet<Festival> _Festivals;
+		
+		private EntityRef<County> _County;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnCountyIDChanging(System.Nullable<int> value);
+    partial void OnCountyIDChanged();
+    #endregion
+		
+		public Town()
+		{
+			this._Festivals = new EntitySet<Festival>(new Action<Festival>(this.attach_Festivals), new Action<Festival>(this.detach_Festivals));
+			this._County = default(EntityRef<County>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(MAX)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CountyID", DbType="Int")]
+		public System.Nullable<int> CountyID
+		{
+			get
+			{
+				return this._CountyID;
+			}
+			set
+			{
+				if ((this._CountyID != value))
+				{
+					if (this._County.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCountyIDChanging(value);
+					this.SendPropertyChanging();
+					this._CountyID = value;
+					this.SendPropertyChanged("CountyID");
+					this.OnCountyIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Town_Festival", Storage="_Festivals", ThisKey="ID", OtherKey="FestivalTown_ID")]
+		public EntitySet<Festival> Festivals
+		{
+			get
+			{
+				return this._Festivals;
+			}
+			set
+			{
+				this._Festivals.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="County_Town", Storage="_County", ThisKey="CountyID", OtherKey="ID", IsForeignKey=true)]
+		public County County
+		{
+			get
+			{
+				return this._County.Entity;
+			}
+			set
+			{
+				County previousValue = this._County.Entity;
+				if (((previousValue != value) 
+							|| (this._County.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._County.Entity = null;
+						previousValue.Towns.Remove(this);
+					}
+					this._County.Entity = value;
+					if ((value != null))
+					{
+						value.Towns.Add(this);
+						this._CountyID = value.ID;
+					}
+					else
+					{
+						this._CountyID = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("County");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Festivals(Festival entity)
+		{
+			this.SendPropertyChanging();
+			entity.Town = this;
+		}
+		
+		private void detach_Festivals(Festival entity)
+		{
+			this.SendPropertyChanging();
+			entity.Town = null;
 		}
 	}
 }
