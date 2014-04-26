@@ -43,6 +43,13 @@ namespace TestAndroid
         [OperationContract]
         Festivalwrapper GetTownDataByCounty(int? id);
 
+        [OperationContract]
+        Festivalwrapper GetFestListDataByTownId(int id);
+
+        [OperationContract]
+        Festivalwrapper GetFestDetailsDataById(int id);
+
+
     }
 
     #region Test WCF

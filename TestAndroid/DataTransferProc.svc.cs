@@ -79,6 +79,51 @@ namespace TestAndroid
         }
         #endregion
 
+        #region GetFestListDataByTownId
+        public Festivalwrapper GetFestListDataByTownId(int id)
+        {
+            Festivalwrapper returnType = new Festivalwrapper();
+            using (azureDBDataContext c = new azureDBDataContext())
+            {
+                //returnType.FestivalList = (from fest in c.Festivals
+                //                         select new FestivalVM()).ToList();
+
+                returnType.FestivalList = (from f in c.Festivals
+                                           where f.FestivalTown_ID.Equals(id)
+                                           select new FestivalVM()
+                                           {
+                                               FestivalId = f.FestivalId,
+                                               FestivalName = f.FestivalName,
+                                           }).ToList();
+            }
+            return returnType;
+        }
+        #endregion
+
+        #region GetFestDetailsDataById
+        public Festivalwrapper GetFestDetailsDataById(int id)
+        {
+            Festivalwrapper returnType = new Festivalwrapper();
+            using (azureDBDataContext c = new azureDBDataContext())
+            {
+                //returnType.FestivalList = (from fest in c.Festivals
+                //                         select new FestivalVM()).ToList();
+
+                returnType.FestivalList = (from f in c.Festivals
+                                           where f.FestivalId.Equals(id)
+                                           select new FestivalVM()
+                                           {
+                                               FestivalId = f.FestivalId,
+                                               FestivalName = f.FestivalName,
+                                               StartDate = f.StartDate,
+                                               EndDate = f.EndDate,
+                                               Description = f.Description,
+                                           }).ToList();
+            }
+            return returnType;
+        }
+        #endregion
+
         #region GetEventData
         public Festivalwrapper GetEventData()
         {
