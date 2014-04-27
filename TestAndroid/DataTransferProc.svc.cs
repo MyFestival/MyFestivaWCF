@@ -55,7 +55,7 @@ namespace TestAndroid
         }
         #endregion
 
-        #region GetFestivalData
+        #region GetFesDataByType
         public Festivalwrapper GetFesDataByType(int id)
         {
             Festivalwrapper returnType = new Festivalwrapper();
@@ -70,9 +70,6 @@ namespace TestAndroid
                                            {
                                                FestivalId = f.FestivalId,
                                                FestivalName = f.FestivalName,
-                                               StartDate = f.StartDate,
-                                               EndDate = f.EndDate,
-                                               Description = f.Description,
                                            }).ToList();
             }
             return returnType;
