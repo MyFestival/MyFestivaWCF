@@ -184,6 +184,7 @@ namespace TestAndroid
         #region GetTownDataByCounty
         public Festivalwrapper GetTownDataByCounty(int? id)
         {
+            //Get Town Data By Selected County
             Festivalwrapper returnType = new Festivalwrapper();
             using (azureDBDataContext c = new azureDBDataContext())
             {
